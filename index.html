@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="英语阅读书架：跟着朗读阅读，黄色高亮追踪单词，点击查看中英文释义。">
+<title>一页一页 · 英语阅读书架</title>
+<style>
+:root{color-scheme:light;--ink:#283b36;--muted:#6c7770;--paper:#faf8f2;--green:#385b49}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+header,main,footer{max-width:1040px;margin:auto;padding-left:28px;padding-right:28px}
+header{padding-top:30px;display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{font-size:17px;font-weight:750}.brand span{display:inline-block;width:10px;height:10px;background:#ddb849;border-radius:50%;margin-right:10px}.header-note{font-size:12px;color:var(--muted)}
+.hero{padding-top:62px;padding-bottom:36px}.eyebrow{font-size:11px;letter-spacing:3px;color:var(--green);font-weight:700}
+h1{font-family:Georgia,"Songti SC",serif;font-size:clamp(32px,5vw,48px);line-height:1.3;letter-spacing:1px;margin:16px 0}p{line-height:1.8}.intro{color:var(--muted);font-size:15px;margin:0;max-width:650px}
+.features{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}.features span{font-size:12px;padding:7px 12px;border-radius:100px;background:#edece2;color:#536253}
+.shelf-head{display:flex;justify-content:space-between;align-items:end;gap:20px;border-top:1px solid #dedfd3;padding-top:26px;margin-bottom:20px}h2{font-size:18px;margin:0}.count{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.book{background:white;border:1px solid #e5e6dc;border-radius:18px;overflow:hidden;box-shadow:0 6px 24px #263b3406;transition:transform .2s,box-shadow .2s}
+.book:hover{transform:translateY(-3px);box-shadow:0 12px 30px #263b3410}.cover{height:200px;position:relative;overflow:hidden;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:8px}.animals{background:#e5ebdd}.soup{background:#f2e7d5}.cover-label{font-family:Georgia,serif;font-size:28px;line-height:1.1;max-width:160px;color:#385b49;z-index:1}.soup .cover-label{color:#805f42}.cover svg{width:150px;height:150px;flex-shrink:0}
+.book-body{padding:24px 26px 26px}.kind{font-size:10px;letter-spacing:2px;color:var(--muted);font-weight:650}.book h3{font-family:Georgia,serif;font-size:25px;margin:9px 0 3px}.zh-title{font-size:13px;color:var(--muted);margin:0}.desc{font-size:13px;color:var(--muted);margin:15px 0 22px}
+.read{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;background:var(--green);color:white;padding:13px 16px;border-radius:10px;font-size:14px;font-weight:600;transition:background .2s}.read:hover{background:#294737}.read:focus-visible{outline:3px solid #dfb849;outline-offset:4px}
+.guide{margin-top:34px;padding:22px 25px;border:1px solid #e2e4d8;border-radius:14px;background:#f1f3e9}.guide strong{font-size:14px}.guide p{font-size:13px;color:#667065;margin:8px 0 0}
+footer{padding-top:35px;padding-bottom:28px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:620px){header,main,footer{padding-left:20px;padding-right:20px}.header-note{display:none}.hero{padding-top:40px}.grid{grid-template-columns:1fr;gap:20px}.cover{height:185px}.book-body{padding:22px}.guide{padding:20px}}
+@media(prefers-reduced-motion:reduce){.book,.read{transition:none}}
+
+/* Single-column portrait bookshelf */
+header,main,footer{max-width:600px;padding-left:18px;padding-right:18px}.header-note{display:none}header{padding-top:22px}.hero{padding-top:34px;padding-bottom:26px}h1{font-size:32px;letter-spacing:0}.intro{font-size:14px}.eyebrow{font-size:10px;letter-spacing:2px}.features{gap:6px;margin-top:16px}.features span{font-size:11px;padding:6px 9px}.grid{grid-template-columns:minmax(0,1fr);gap:20px}.shelf-head{padding-top:22px}.count{font-size:11px}.cover{height:164px;padding:18px 24px}.cover svg{width:130px;height:130px}.cover-label{font-size:30px}.book-body{padding:22px}.desc{margin:12px 0 18px}.choose{font-size:12px;color:var(--muted);margin:0 0 10px}.levels{display:grid;gap:9px}.level{display:flex;align-items:center;gap:12px;min-height:70px;padding:12px 14px;text-decoration:none;color:var(--ink);border:1px solid #dce4d6;border-radius:12px;background:#f4f7ef}.level strong{display:block;font-size:15px}.level small{display:block;font-size:11px;color:var(--muted);margin-top:4px}.level-dot{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#e0ead7;color:#45633b;font-size:13px;font-weight:700;flex-shrink:0}.middle{background:#fcf8ed;border-color:#eee3c5}.middle .level-dot{background:#f0e4c4;color:#8a6d2f}.advanced{background:#f5f1ed;border-color:#e8dbcf}.advanced .level-dot{background:#e8dbcf;color:#825b43}.arrow{margin-left:auto}.level:focus-visible{outline:3px solid #ddb849;outline-offset:3px}.level:hover{filter:brightness(.97)}.guide{margin-top:24px;padding:18px}.guide p{font-size:12px}footer{padding-top:25px;padding-bottom:calc(24px + env(safe-area-inset-bottom));font-size:11px}
+@media(max-width:350px){h1{font-size:28px}.count{font-size:10px}.shelf-head{gap:8px}.cover{padding:16px 18px}.cover svg{width:110px;height:110px}.book-body{padding:18px}}
+.raz-heading{margin-top:30px}.raz-badge{display:inline-block;margin-left:6px;padding:3px 8px;border-radius:20px;background:#f1e4ce;color:#886644;font-size:11px}</style>
+</head>
+<body>
+<header><div class="brand"><span></span>一页一页</div><div class="header-note">ENGLISH READING LIBRARY</div></header>
+<main>
+<section class="hero" aria-labelledby="page-title">
+<div class="eyebrow">LISTEN · READ · DISCOVER</div>
+<h1 id="page-title">今天，从一页开始。</h1>
+<p class="intro">选一个主题，按自己的节奏听读。</p>
+<div class="features"><span>♫ 音频朗读</span><span>▰ 黄色单词高亮</span><span>Aa 点击查看中英文释义</span></div>
+</section>
+<section aria-labelledby="shelf-title">
+<div class="shelf-head"><h2 id="shelf-title">Science A–Z 科学阅读</h2><span class="count">三档难度</span></div>
+<div class="grid">
+<!-- 新增文章时，复制一张 article 卡片并修改标题及 href。 -->
+<article class="book">
+<div class="cover animals"><div class="cover-label">Animals,<br>Animals</div>
+<svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="82" cy="82" r="67" fill="#d5dfc5"/><path d="M36 125q4-57 44-57t43 57" fill="#7c9270"/><ellipse cx="49" cy="68" rx="22" ry="30" fill="#a2b195"/><ellipse cx="112" cy="68" rx="22" ry="30" fill="#a2b195"/><ellipse cx="81" cy="67" rx="31" ry="33" fill="#a2b195"/><path d="M75 79q-8 30 2 35t14-12" fill="none" stroke="#a2b195" stroke-width="15" stroke-linecap="round"/><circle cx="70" cy="62" r="3" fill="#344b36"/><circle cx="92" cy="62" r="3" fill="#344b36"/><path d="M23 132h115" stroke="#b5c5a5" stroke-width="3" stroke-linecap="round"/></svg>
+</div>
+<div class="book-body"><div class="kind">ENGLISH READ-ALONG</div><h3>Animals, Animals</h3><p class="zh-title">动物，动物</p><p class="desc">同一个动物主题，选一档适合今天的难度。</p><p class="choose">选择阅读难度</p><nav class="levels" aria-label="Animals 阅读难度">
+<a class="level easy" href="animals-low.html"><span class="level-dot" aria-hidden="true">1</span><span><strong>容易</strong><small>短句入门 · 约 1 分钟</small></span><span class="arrow" aria-hidden="true">→</span></a>
+<a class="level middle" href="animals-mid.html"><span class="level-dot" aria-hidden="true">2</span><span><strong>中等</strong><small>丰富表达 · 约 3 分钟</small></span><span class="arrow" aria-hidden="true">→</span></a>
+<a class="level advanced" href="animals-high.html"><span class="level-dot" aria-hidden="true">3</span><span><strong>较难</strong><small>深入阅读 · 约 5 分钟</small></span><span class="arrow" aria-hidden="true">→</span></a>
+</nav></div>
+</article>
+</div></section>
+<section aria-labelledby="raz-title"><div class="shelf-head raz-heading"><h2 id="raz-title">RAZ 分级阅读</h2><span class="count">D级</span></div><div class="grid">
+<article class="book">
+<div class="cover soup"><div class="cover-label">Stone<br>Soup</div>
+<svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="82" r="67" fill="#e9d9bb"/><path d="M67 27q-13 12 0 24m20-29q-13 12 0 24m18-13q-10 10 0 20" fill="none" stroke="#b99c74" stroke-width="4" stroke-linecap="round"/><path d="M29 73v32q0 32 51 32t51-32V73" fill="#9a7956"/><ellipse cx="80" cy="73" rx="51" ry="15" fill="#775b40"/><ellipse cx="80" cy="74" rx="43" ry="10" fill="#dab170"/><ellipse cx="83" cy="71" rx="12" ry="7" fill="#aca79c"/><path d="M27 87H17v20h16m100-20h10v20h-16" fill="none" stroke="#9a7956" stroke-width="7" stroke-linejoin="round"/><circle cx="59" cy="76" r="4" fill="#819361"/><circle cx="104" cy="74" r="4" fill="#bc764e"/><path d="M31 140h98" stroke="#ceb791" stroke-width="3" stroke-linecap="round"/></svg>
+</div>
+<div class="book-body"><div class="kind">ENGLISH READ-ALONG</div><h3>Stone Soup</h3><p class="zh-title">石头汤 <span class="raz-badge">RAZ-D级</span></p><p class="desc">打开阅读页，跟随朗读走进石头汤的故事。</p><a class="read" href="stone-soup.html" aria-label="开始阅读 Stone Soup">开始阅读 <span aria-hidden="true">→</span></a></div>
+</article>
+</div>
+</section>
+<aside class="guide"><strong>让阅读慢一点，也没关系。</strong><p>进入文章后，点击播放开始朗读，黄色高亮会跟随单词移动。点击单词查看英文解释和中文释义，理解后继续阅读。</p></aside>
+</main>
+<footer><span>一页一页 · 英语阅读书架</span><span>每一小段阅读，都是一点新的积累。</span></footer>
+</body>
+</html>
