@@ -27,16 +27,20 @@ footer{padding-top:35px;padding-bottom:28px;font-size:12px;color:var(--muted);di
 /* Single-column portrait bookshelf */
 header,main,footer{max-width:600px;padding-left:18px;padding-right:18px}.header-note{display:none}header{padding-top:22px}.hero{padding-top:34px;padding-bottom:26px}h1{font-size:32px;letter-spacing:0}.intro{font-size:14px}.eyebrow{font-size:10px;letter-spacing:2px}.features{gap:6px;margin-top:16px}.features span{font-size:11px;padding:6px 9px}.grid{grid-template-columns:minmax(0,1fr);gap:20px}.shelf-head{padding-top:22px}.count{font-size:11px}.cover{height:164px;padding:18px 24px}.cover svg{width:130px;height:130px}.cover-label{font-size:30px}.book-body{padding:22px}.desc{margin:12px 0 18px}.choose{font-size:12px;color:var(--muted);margin:0 0 10px}.levels{display:grid;gap:9px}.level{display:flex;align-items:center;gap:12px;min-height:70px;padding:12px 14px;text-decoration:none;color:var(--ink);border:1px solid #dce4d6;border-radius:12px;background:#f4f7ef}.level strong{display:block;font-size:15px}.level small{display:block;font-size:11px;color:var(--muted);margin-top:4px}.level-dot{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#e0ead7;color:#45633b;font-size:13px;font-weight:700;flex-shrink:0}.middle{background:#fcf8ed;border-color:#eee3c5}.middle .level-dot{background:#f0e4c4;color:#8a6d2f}.advanced{background:#f5f1ed;border-color:#e8dbcf}.advanced .level-dot{background:#e8dbcf;color:#825b43}.arrow{margin-left:auto}.level:focus-visible{outline:3px solid #ddb849;outline-offset:3px}.level:hover{filter:brightness(.97)}.guide{margin-top:24px;padding:18px}.guide p{font-size:12px}footer{padding-top:25px;padding-bottom:calc(24px + env(safe-area-inset-bottom));font-size:11px}
 @media(max-width:350px){h1{font-size:28px}.count{font-size:10px}.shelf-head{gap:8px}.cover{padding:16px 18px}.cover svg{width:110px;height:110px}.book-body{padding:18px}}
-.raz-heading{margin-top:30px}.raz-badge{display:inline-block;margin-left:6px;padding:3px 8px;border-radius:20px;background:#f1e4ce;color:#886644;font-size:11px}</style>
+.raz-heading{margin-top:30px}.raz-badge{display:inline-block;margin-left:6px;padding:3px 8px;border-radius:20px;background:#f1e4ce;color:#886644;font-size:11px}
+.ear-entry{margin:20px 0 0;width:100%;min-height:48px;background:#385b49;color:white;border:0;border-radius:12px;font:inherit;font-size:15px;cursor:pointer}.ear-view[hidden]{display:none!important}.ear-view{padding:32px 0}.ear-view h1{font-size:28px}.ear-view p{font-size:14px;color:#6c7770}.ear-view audio{width:100%;margin:20px 0}.ear-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ear-actions button{min-height:46px;font:inherit;border:1px solid #dce4d6;background:white;color:#385b49;border-radius:10px;cursor:pointer}.ear-actions .ear-return{grid-column:1/-1;background:#385b49;color:white}.ear-actions button:disabled{opacity:.45;cursor:default}.ear-back{margin-top:18px;background:none;border:0;color:#6c7770;font:inherit;text-decoration:underline;cursor:pointer}.ear-mode main>section:not(.ear-view),.ear-mode main>.guide,.ear-mode footer{display:none!important}button:focus-visible{outline:3px solid #ddb849;outline-offset:3px}
+</style>
 </head>
 <body>
 <header><div class="brand"><span></span>一页一页</div><div class="header-note">ENGLISH READING LIBRARY</div></header>
 <main>
+<section id="ear-view" class="ear-view" hidden aria-labelledby="ear-title"><div class="eyebrow">LISTENING TIME</div><h1 id="ear-title">磨耳朵</h1><p>按顺序听完书架中的全部阅读。暂停后，可回到当前书页。</p><p id="ear-track" aria-live="polite"></p><audio id="ear-audio" controls preload="metadata"></audio><div class="ear-actions"><button id="ear-prev">上一篇</button><button id="ear-next">下一篇</button><button id="ear-return" class="ear-return" disabled>暂停并回到书页</button></div><p id="ear-state" role="status"></p><button id="ear-back" class="ear-back">回到书架</button></section>
 <section class="hero" aria-labelledby="page-title">
 <div class="eyebrow">LISTEN · READ · DISCOVER</div>
 <h1 id="page-title">今天，从一页开始。</h1>
 <p class="intro">选一个主题，按自己的节奏听读。</p>
 <div class="features"><span>♫ 音频朗读</span><span>▰ 黄色单词高亮</span><span>Aa 点击查看中英文释义</span></div>
+<button id="ear-open" class="ear-entry">♫ 磨耳朵 · 顺序播放全部阅读</button>
 </section>
 <section aria-labelledby="shelf-title">
 <div class="shelf-head"><h2 id="shelf-title">Science A–Z 科学阅读</h2><span class="count">三档难度</span></div>
@@ -65,5 +69,54 @@ header,main,footer{max-width:600px;padding-left:18px;padding-right:18px}.header-
 <aside class="guide"><strong>让阅读慢一点，也没关系。</strong><p>进入文章后，点击播放开始朗读，黄色高亮会跟随单词移动。点击单词查看英文解释和中文释义，理解后继续阅读。</p></aside>
 </main>
 <footer><span>一页一页 · 英语阅读书架</span><span>每一小段阅读，都是一点新的积累。</span></footer>
+
+<script>
+const earAudio=document.getElementById('ear-audio');
+const tracks=[
+ {file:'animals-low.html',title:'Animals, Animals · 容易'},
+ {file:'animals-mid.html',title:'Animals, Animals · 中等'},
+ {file:'animals-high.html',title:'Animals, Animals · 较难'},
+ {file:'stone-soup.html',title:'Stone Soup · RAZ-D级'}
+];
+let trackIndex=0,loadedTrack=null,loadTicket=0,loadingController=null;
+const state=document.getElementById('ear-state');
+function trackControls(){document.getElementById('ear-prev').disabled=trackIndex===0;document.getElementById('ear-next').disabled=trackIndex===tracks.length-1;}
+async function loadTrack(i){
+ const ticket=++loadTicket;
+ if(loadingController)loadingController.abort();
+ const controller=new AbortController();loadingController=controller;
+ earAudio.pause();earAudio.removeAttribute('src');earAudio.load();loadedTrack=null;trackIndex=i;
+ document.getElementById('ear-return').disabled=true;
+ document.getElementById('ear-track').textContent=(i+1)+' / '+tracks.length+' · '+tracks[i].title;
+ trackControls();state.textContent='正在加载音频…';
+ try{
+  const res=await fetch(tracks[i].file,{signal:controller.signal});if(!res.ok)throw Error('HTTP '+res.status);
+  const html=await res.text();if(ticket!==loadTicket)return;
+  const parsed=new DOMParser().parseFromString(html,'text/html');
+  const player=parsed.querySelector('audio');const src=player?.getAttribute('src')||player?.querySelector('source')?.getAttribute('src');
+  if(!src)throw Error('Missing audio');
+  earAudio.src=src.startsWith('data:')?src:new URL(src,new URL(tracks[i].file,location.href)).href;
+  loadedTrack=i;document.getElementById('ear-return').disabled=false;state.textContent='';
+  try{await earAudio.play()}catch{if(ticket===loadTicket)state.textContent='点击播放器的播放按钮继续。'}
+ }catch(e){if(ticket===loadTicket&&e.name!=='AbortError')state.textContent='音频加载失败。请确认阅读文件已上传；本地使用请通过网站打开。';}
+}
+document.getElementById('ear-open').onclick=()=>{
+ document.body.classList.add('ear-mode');document.getElementById('ear-view').hidden=false;window.scrollTo(0,0);
+ if(loadedTrack===null)loadTrack(trackIndex);else earAudio.play().catch(()=>{state.textContent='点击播放继续。'});
+};
+earAudio.addEventListener('ended',()=>{if(loadedTrack!==null&&trackIndex<tracks.length-1)loadTrack(trackIndex+1);else state.textContent='全部音频已播放完毕。'});
+earAudio.addEventListener('error',()=>{if(earAudio.getAttribute('src'))state.textContent='音频暂时无法播放，请重试。'});
+document.getElementById('ear-prev').onclick=()=>loadTrack(Math.max(0,trackIndex-1));
+document.getElementById('ear-next').onclick=()=>loadTrack(Math.min(tracks.length-1,trackIndex+1));
+document.getElementById('ear-return').onclick=()=>{
+ if(loadedTrack===null)return;earAudio.pause();
+ location.href=tracks[loadedTrack].file+'#listen-time='+earAudio.currentTime.toFixed(3);
+};
+document.getElementById('ear-back').onclick=()=>{
+ earAudio.pause();if(loadingController&&loadedTrack===null){++loadTicket;loadingController.abort()}
+ document.body.classList.remove('ear-mode');document.getElementById('ear-view').hidden=true;
+};
+trackControls();
+</script>
 </body>
 </html>
